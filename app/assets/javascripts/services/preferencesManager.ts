@@ -39,15 +39,16 @@ export class PreferencesManager extends ApplicationService {
   }
 
   streamPreferences() {
-    this.unubscribeStreamItems = this.application!.streamItems(
-      ContentType.UserPrefs,
-      () => {
-        this.needsSingletonReload = true;
-      }
-    );
+    // this.unubscribeStreamItems = this.application!.streamItems(
+    //   ContentType.UserPrefs,
+    //   () => {
+    //     this.needsSingletonReload = true;
+    //   }
+    // );
   }
 
   private async reloadSingleton() {
+    return;
     if (this.loadingPrefs || !this.needsSingletonReload) {
       return;
     }

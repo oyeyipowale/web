@@ -891,13 +891,13 @@ class EditorViewCtrl extends PureViewCtrl<{}, EditorState> {
 
   async onPanelResizeFinish(width: number, left: number, isMaxWidth: boolean) {
     if (isMaxWidth) {
-      await this.application.getPrefsService().setUserPrefValue(
+      this.application.setPreference(
         WebPrefKey.EditorWidth,
         null
       );
     } else {
       if (width !== undefined && width !== null) {
-        await this.application.getPrefsService().setUserPrefValue(
+        this.application.setPreference(
           WebPrefKey.EditorWidth,
           width
         );
@@ -905,25 +905,24 @@ class EditorViewCtrl extends PureViewCtrl<{}, EditorState> {
       }
     }
     if (left !== undefined && left !== null) {
-      await this.application.getPrefsService().setUserPrefValue(
+      this.application.setPreference(
         WebPrefKey.EditorLeft,
         left
       );
       this.rightPanelPuppet!.setLeft!(left);
     }
-    this.application.getPrefsService().syncUserPreferences();
   }
 
   async reloadPreferences() {
-    const monospaceFont = this.application.getPrefsService().getValue(
+    const monospaceFont = this.application.getPreference(
       WebPrefKey.EditorMonospaceEnabled,
       true
     );
-    const spellcheck = this.application.getPrefsService().getValue(
+    const spellcheck = this.application.getPreference(
       WebPrefKey.EditorSpellcheck,
       true
     );
-    const marginResizersEnabled = this.application.getPrefsService().getValue(
+    const marginResizersEnabled = this.application.getPreference(
       WebPrefKey.EditorResizersEnabled,
       true
     );
@@ -945,7 +944,7 @@ class EditorViewCtrl extends PureViewCtrl<{}, EditorState> {
       this.leftPanelPuppet?.ready &&
       this.rightPanelPuppet?.ready
     ) {
-      const width = this.application.getPrefsService().getValue(
+      const width = this.application.getPreference(
         WebPrefKey.EditorWidth,
         null
       );
@@ -953,7 +952,7 @@ class EditorViewCtrl extends PureViewCtrl<{}, EditorState> {
         this.leftPanelPuppet!.setWidth!(width);
         this.rightPanelPuppet!.setWidth!(width);
       }
-      const left = this.application.getPrefsService().getValue(
+      const left = this.application.getPreference(
         WebPrefKey.EditorLeft,
         null
       );
@@ -984,10 +983,9 @@ class EditorViewCtrl extends PureViewCtrl<{}, EditorState> {
 
   async toggleWebPrefKey(key: WebPrefKey) {
     const currentValue = (this.state as any)[key];
-    await this.application.getPrefsService().setUserPrefValue(
+    await this.application.setPreference(
       key,
-      !currentValue,
-      true
+      !currentValue
     );
     await this.setState({
       [key]: !currentValue

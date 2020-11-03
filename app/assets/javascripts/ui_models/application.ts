@@ -141,10 +141,6 @@ export class WebApplication extends SNApplication {
     return this.webServices.themeService;
   }
 
-  public getPrefsService() {
-    return this.webServices.prefsService;
-  }
-
   public getKeyboardService() {
     return this.webServices.keyboardService;
   }
